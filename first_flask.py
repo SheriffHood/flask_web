@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 #-*- coding: utf-8 -*-
 
+'''
+Author: yuexing
+Date: 2017-11-08
+Keyword: the first flask demo
+'''
+
 from flask import Flask
 from flask import abort
 from flask import request

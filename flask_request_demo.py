@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 #-*- coding: utf-8 -*-
 
+'''
+Author: yuexing
+Date: 2017-11-14
+Key word: flask request object
+'''
+
 from flask import Flask
 from flask import request
 from flask import render_template
