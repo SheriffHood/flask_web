@@ -2,20 +2,24 @@
 #-*- coding: utf-8 -*-:
 
 '''
-Date: 2017-10-24
+Date: 2017-12-08
 Author: yuexing
 Keyword: main app file, define middlewares and main function
 '''
+
+from flask import Flask
 
 import logging; logging.basicConfig(level=logging.INFO)
 import asyncio, os, json, time
 from datetime import datetime
 from aiohttp import web
 from jinja2 import Environment, FileSystemLoader
-import orm
 from coroweb import add_routes, add_static
 from models import User
 from handlers import cookie2user, COOKIE_NAME
+
+app = Flask(__name__)
+app.config.from_object('settings')
 
 #init 模板引擎
 def init_jinja2(app, **kw):

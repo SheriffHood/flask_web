@@ -1,10 +1,10 @@
-drop database if exists awesome;
+drop database if exists hoodsite;
 
-create database awesome;
+create database hoodsite;
 
-use awesome;
+use hoodsite;
 
-grant select, insert, update, delete on awesome. * to 'root'@'localhost' identified by 'password';
+grant select, insert, update, delete on hoodsite. * to 'root'@'localhost' identified by 'password';
 
 create table users(
 	`id` varchar(50) not null,
