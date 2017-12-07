@@ -21,4 +21,5 @@ class DevConfig(object):
     Development Config Class
     '''
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'mysql+mysql.connector://root:password@localhost:3306/hoodsite'
+    SQLALCHEMY_DATABASE_URI = 'mysql+mysql.connector://hoodsite.db'
+    SQLALCHEMY_COMMIT_ON_TEARDOWN = True

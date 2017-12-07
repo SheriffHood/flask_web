@@ -2,47 +2,25 @@
 #-*- coding: utf-8 -*-
 
 '''
-Date: 2017-10-24
+Date: 2017-12-7
 Author: yuexing
-Keyword: define user, blog and comment class
+Keyword: define database 
 '''
 
-import time, uuid
-from orm import Model, StringField, BooleanField, FloatField, TextField
+from flask_sqlalchemy import SQLAlchemy
+from hood_site import app
 
-def next_id():
-    return '%015d%s000' % (int(time.time() * 1000), uuid.uuid4().hex)
+db = SQLAlchemy(app)
 
-class User(Model):
-    __table__ = 'users'
+class User(db.Model):
+    __tablename__ = 'users'
 
-    id = StringField(primary_key=True, default=next_id, ddl='varchar(50)')
-    email = StringField(ddl='varchar(50)')
-    passwd = StringField(ddl='varchar(50)')
-    admin = BooleanField()
-    name = StringField(ddl='varchar(50)')
-    image = StringField(ddl='varchar(500)')
-    created_at = FloatField(default=time.time)
+    id = db.Column(db.String(45), primary_key=True)
+    username = db.Column(db.String(255))
+    password = db.Column(db.String(255))
 
-class Blog(Model):
-    __table__ = 'blogs'
+    def __init__(self, username):
+        self.username = username
 
-    id = StringField(primary_key=True, default=next_id, ddl='varchar(50)')
-    user_id = StringField(ddl='varchar(50)')
-    user_name = StringField(ddl='varchar(50)')
-    user_image = StringField(ddl='varchar(500)')
-    name = StringField(ddl='varchar(50)')
-    summary = StringField(ddl='varchar(200)')
-    content = TextField()
-    created_at = FloatField(default=time.time)
-
-class Comment(Model):
-    __table__ = 'comments'
-   
-    id = StringField(primary_key=True, default=next_id, ddl='varchar(50)')
-    blog_id = StringField(ddl='varchar(50)')
-    user_id = StringField(ddl='varchar(50)')
-    user_name = StringField(ddl='varchar(50)')
-    user_image = StringField(ddl='varchar(500)')
-    content = TextField()
-    created_at = FloatField(default=time.time)
+    def __repr__(self):
+        return '<User %r>'.format(self.username)
