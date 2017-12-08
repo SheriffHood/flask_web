@@ -13,7 +13,8 @@ manager.add_command('server', Server())
 def make_shell_context():
     return dict(app=hood_site.app,
                 db=models.db,
-                User=models.User)
+                User=models.User,
+                Post=models.Post)
 
 if __name__ == '__main__':
     manager.run()
