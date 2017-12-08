@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #-*- coding:utf-8 -*-
 
-from flask.ext.script import Manager, Server
+from flask_script import Manager, Server, Shell
 import hood_site
 import models
 
