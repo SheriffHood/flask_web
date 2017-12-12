@@ -7,5 +7,7 @@ from settings import DevConfig
 app = Flask(__name__)
 app.config.from_object(DevConfig)
 
+views = __import__('views')
+
 if __name__ == '__main__':
     app.run()
