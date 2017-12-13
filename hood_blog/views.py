@@ -24,7 +24,7 @@ def home(page=1):
         Post.publist_date.desc()
         ).paginate(page, 10)
 
-    recent top_tags = sidebar_data()
+    recent, top_tags = sidebar_data()
 
     return render_template('home.html',
                             posts=posts,
