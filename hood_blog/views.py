@@ -5,7 +5,9 @@ from flask import render_template
 from sqlalchemy import func
 
 from hood_site import app
-from models import User, Post, Comment, Tag, posts_tags
+from models import db, User, Post, Comment, Tag, posts_tags
+
+from forms import CommentForm
 
 def sidebar_data():
     recent = db.session.query(Post).order_by(Post.publist_date.desc()).limit(5).all()
@@ -34,6 +36,15 @@ def home(page=1):
 @app.route('/post/<string:post_id>')
 def post(post_id):
     '''view function for post page'''
+
+    form = CommentForm()
+    if form.validate_on_submit():
+        new_comment = Comment(id=str(uuid4()), name=form.name.data)
+        new_comment.text = form.text.data
+        new_comment.date = datetime.datetime.now()
+        new_comment.post_id = post_id
+        db.session.add(new_comment)
+        db.session.commit()
 
     post = db.session.query(Post).get_or_404(post_id)
     tags = post.tags
