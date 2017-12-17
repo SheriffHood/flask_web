@@ -8,7 +8,7 @@ class Config(object):
     '''
     Base Config Class
     '''
-    SECRET_KEY = cf7fb7e99f88ebcba48385827c810882
+    SECRET_KEY = 'cf7fb7e99f88ebcba48385827c810882'
 
 class ProdConfig(object):
     '''

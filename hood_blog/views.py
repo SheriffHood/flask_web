@@ -7,7 +7,7 @@ from sqlalchemy import func
 from hood_site import app
 from models import db, User, Post, Comment, Tag, posts_tags
 
-from forms import CommentForm
+from wt_forms import CommentForm
 
 def sidebar_data():
     recent = db.session.query(Post).order_by(Post.publist_date.desc()).limit(5).all()
