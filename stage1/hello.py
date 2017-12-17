@@ -10,16 +10,12 @@ Keyword: redering templates
 from flask import Flask
 from flask import render_template
 
+
 app = Flask(__name__)
+views = __import__('views')
 
-@app.route('/')
-def index():
-    return render_template('home.html')
-
-@app.route('/hello/')
-@app.route('/hello/<name>')
-def sayHello(name=None):
-    return render_template('hello.html', name=name)
+app.add_url_rule('/index', view_func=views.index)
+app.add_url_rule('/sayHello', view_func=view.sayHello)
 
 if __name__ == '__main__':
     app.run(debug=True)
