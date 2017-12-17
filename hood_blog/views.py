@@ -3,10 +3,8 @@
 
 from flask import render_template
 from sqlalchemy import func
-
 from hood_site import app
 from models import db, User, Post, Comment, Tag, posts_tags
-
 from wt_forms import CommentForm
 
 def sidebar_data():
@@ -33,7 +31,7 @@ def home(page=1):
                             recent=recent,
                             top_tags=top_tags)
 
-@app.route('/post/<string:post_id>')
+@app.route('/post/<string:post_id>', methods=('GET', 'POST'))
 def post(post_id):
     '''view function for post page'''
 

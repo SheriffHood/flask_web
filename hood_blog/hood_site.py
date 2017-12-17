@@ -3,12 +3,12 @@
 
 from flask import Flask
 from settings import DevConfig
-import wt_forms
-import views
 
 app = Flask(__name__)
-app.config.from_object(DevConfig)
 
+views = __import__('views')
+
+app.config.from_object(DevConfig)
 
 if __name__ == '__main__':
     app.run()

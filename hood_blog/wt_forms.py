@@ -7,5 +7,5 @@ from wtforms.validators import DataRequired, Length
 
 class CommentForm(Form):
     
-    name = StringField(validators=[DataRequired(), Length(max=255)])
+    name = StringField('Name', validators=[DataRequired(), Length(max=255)])
     text = TextField(u'Comment', validators=[DataRequired()])
