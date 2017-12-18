@@ -30,7 +30,7 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r>' % self.username
 
-posts_tags = db.Table('posts_tags',
+    posts_tags = db.Table('posts_tags',
     db.Column('post_id', db.String(45), db.ForeignKey('posts.id')),
     db.Column('tag_id', db.String(45), db.ForeignKey('tags.id')))
 

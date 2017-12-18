@@ -1,11 +1,18 @@
 #!/usr/bin/env python3
 #-*- coding:utf-8 -*-
 
-from flask import render_template
+from os import path
+from flask import render_template, Blueprint
 from sqlalchemy import func
 from hood_site import app
 from models import db, User, Post, Comment, Tag, posts_tags
 from wt_forms import CommentForm
+
+blog_blueprint = Blueprint(
+    'blog',
+    __name__,
+    template_folder=path.join('template/blog'),
+    url_prefix'/blog')
 
 def sidebar_data():
     recent = db.session.query(Post).order_by(Post.publist_date.desc()).limit(5).all()
@@ -15,8 +22,8 @@ def sidebar_data():
 
     return recent, top_tags
 
-@app.route('/')
-@app.route('/<int:page>')
+@blog_blueprint.route('/')
+@blog_blueprint.route('/<int:page>')
 def home(page=1):
     '''view function for home page'''
 
@@ -31,7 +38,7 @@ def home(page=1):
                             recent=recent,
                             top_tags=top_tags)
 
-@app.route('/post/<string:post_id>', methods=('GET', 'POST'))
+@blog_blueprint.route('/post/<string:post_id>', methods=('GET', 'POST'))
 def post(post_id):
     '''view function for post page'''
 
@@ -56,7 +63,7 @@ def post(post_id):
                             recent=recent,
                             top_tags=top_tags)
 
-@app.route('/tag/<string:tag_name>')
+@blog_blueprint.route('/tag/<string:tag_name>')
 def tag(tag_name):
     '''view function for tag page'''
 
@@ -70,7 +77,7 @@ def tag(tag_name):
                             recent=receny,
                             top_tags=top_tags)
 
-@app.route('/user/<string:username>')
+@blog_blueprint.route('/user/<string:username>')
 def user(username):
     '''view function for user page'''
 
