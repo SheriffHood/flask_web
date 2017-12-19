@@ -8,9 +8,12 @@ Keyword: define database
 '''
 
 from flask_sqlalchemy import SQLAlchemy
-from hood_site import app
 
-db = SQLAlchemy(app)
+db = SQLAlchemy()
+
+posts_tags = db.Table('posts_tags',
+    db.Column('post_id', db.String(45), db.ForeignKey('posts.id')),
+    db.Column('tag_id', db.String(45), db.ForeignKey('tags.id')))
 
 class User(db.Model):
     '''user class'''
@@ -29,10 +32,6 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.username
-
-    posts_tags = db.Table('posts_tags',
-    db.Column('post_id', db.String(45), db.ForeignKey('posts.id')),
-    db.Column('tag_id', db.String(45), db.ForeignKey('tags.id')))
 
 class Post(db.Model):
     '''post class'''

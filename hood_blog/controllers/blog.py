@@ -4,21 +4,20 @@
 from os import path
 from flask import render_template, Blueprint
 from sqlalchemy import func
-from hood_site import app
-from models import db, User, Post, Comment, Tag, posts_tags
-from wt_forms import CommentForm
+from hood_blog.models import db, User, Post, Comment, Tag, posts_tags
+from hood_blog.forms import CommentForm
 
 blog_blueprint = Blueprint(
     'blog',
     __name__,
-    template_folder=path.join('template/blog'),
-    url_prefix'/blog')
+    template_folder=path.join(path.pardir, 'template', 'blog'),
+    url_prefix='/blog')
 
 def sidebar_data():
     recent = db.session.query(Post).order_by(Post.publist_date.desc()).limit(5).all()
 
     top_tags = db.session.query(Tag, 
-    func.count(posts_tags.c.post_id).label('total')).join(posts_tags).group_by(Tag).order_by('total Desc').limit(5).all()
+    func.count(posts_tags.post_id).label('total')).join(posts_tags).group_by(Tag).order_by('total Desc').limit(5).all()
 
     return recent, top_tags
 
