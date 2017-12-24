@@ -3,7 +3,7 @@
 
 from flask_script import Manager, Server, Shell
 from flask_migrate import Migrate, MigrateCommand
-import hood_site
+import hoodsite
 import models
 
 manager = Manager(hood_site.app)
