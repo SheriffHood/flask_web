@@ -10,13 +10,14 @@ class Config(object):
     '''
     SECRET_KEY = 'cf7fb7e99f88ebcba48385827c810882'
 
-class ProdConfig(object):
+class ProdConfig(Config):
     '''
     Production Config Class
     '''
     pass
 
-class DevConfig(object):
+class DevConfig(Config):
+
     '''
     Development Config Class
     '''

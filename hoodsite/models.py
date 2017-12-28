@@ -6,10 +6,10 @@ Date: 2017-12-7
 Author: yuexing
 Keyword: define database 
 '''
-
 from flask_sqlalchemy import SQLAlchemy
+from main import app
 
-db = SQLAlchemy()
+db = SQLAlchemy(app)
 
 posts_tags = db.Table('posts_tags',
     db.Column('post_id', db.String(45), db.ForeignKey('posts.id')),
