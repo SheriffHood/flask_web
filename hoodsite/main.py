@@ -5,12 +5,10 @@ from flask import Flask
 from settings import DevConfig
 
 app = Flask(__name__)
+
+views = __import__('views')
+
 app.config.from_object(DevConfig)
-
-
-@app.route('/')
-def index():
-    return '<h1>Hello World!</h1>'
 
 if __name__ == '__main__':
     app.run()
