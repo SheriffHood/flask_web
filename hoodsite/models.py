@@ -76,8 +76,9 @@ class Tag(db.Model):
     id = db.Column(db.String(45), primary_key=True)
     name = db.Column(db.String(255))
 
-    def __init__(self, name):
+    def __init__(self, name, id):
         self.name = name
+        self.id = id
 
     def __repr__(self):
         return '<Model Tag %r>' % self.name

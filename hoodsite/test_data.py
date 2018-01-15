@@ -7,7 +7,7 @@ from uuid import uuid4
 
 from models import db, User, Tag, Post
 
-user = User()
+user = User(17021402, 'Max', 'passwd')
 db.session.add(user)
 db.session.commit()
 
@@ -18,7 +18,7 @@ tag_three = Tag(id=str(uuid4()), name='SQLALchemy')
 tag_four = Tag(id=str(uuid4()), name='Program')
 tag_five = Tag(id=str(uuid4()), name='network')
 
-tag_list = [tag_one, tag_two, tag_third, tag_four, tag_five]
+tag_list = [tag_one, tag_two, tag_three, tag_four, tag_five]
 
 s = 'EXAMPLE TEXT'
 
