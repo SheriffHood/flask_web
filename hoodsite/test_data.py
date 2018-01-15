@@ -17,12 +17,11 @@ tag_two = Tag(id=str(uuid4()), name='Flask')
 tag_three = Tag(id=str(uuid4()), name='SQLALchemy')
 tag_four = Tag(id=str(uuid4()), name='Program')
 tag_five = Tag(id=str(uuid4()), name='network')
-
 tag_list = [tag_one, tag_two, tag_three, tag_four, tag_five]
 
 s = 'EXAMPLE TEXT'
 
-for i in xrange(100):
+for i in range(100):
     new_post = Post(id=str(uuid4()), title='Post'+str(i))
     new_post.user = user
     new_post.publish_date = datetime.datetime.now()
