@@ -46,7 +46,8 @@ class Post(db.Model):
     comments = db.relationship('Comment', backref='posts', lazy='dynamic')
     tags = db.relationship('Tag', secondary=posts_tags, backref=db.backref('posts', lazy='dynamic'))
 
-    def __init__(self, title):
+    def __init__(self, id, title):
+        self.id = id
         self.title = title
 
     def __repr__(self):

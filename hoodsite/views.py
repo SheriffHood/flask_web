@@ -54,7 +54,8 @@ def post(post_id):
                             tags=tags,
                             comments=comments,
                             recent=recent,
-                            top_tags=top_tags)
+                            top_tags=top_tags,
+                            form=form)
 
 @app.route('/tag/<string:tag_name>')
 def tag(tag_name):
