@@ -7,6 +7,9 @@ from main import app
 from models import db, User, Post, Comment, Tag, posts_tags
 from forms import CommentForm
 
+
+blog_blueprint = Blueprint('blog', __name__, template_floder=path.join(path.pardir, 'templates', 'blog'), url_prefix='/blog')
+
 def sidebar_data():
     recent = db.session.query(Post).order_by(Post.publish_date.desc()).limit(5).all()
 
@@ -15,8 +18,8 @@ def sidebar_data():
 
     return recent, top_tags
 
-@app.route('/')
-@app.route('/<int:page>')
+@blog_blueprint.route('/')
+@blog_blueprint.route('/<int:page>')
 def home(page=1):
     '''view function for home page'''
 
@@ -31,7 +34,7 @@ def home(page=1):
                             recent=recent,
                             top_tags=top_tags)
 
-@app.route('/post/<string:post_id>', methods=('GET', 'POST'))
+@blog_blueprint.route('/post/<string:post_id>', methods=('GET', 'POST'))
 def post(post_id):
     '''view function for post page'''
 
