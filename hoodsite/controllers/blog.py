@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 #-*- coding:utf-8 -*-
 
-from flask import render_template
+from flask import render_template, Blueprint
+from uuid import uuid4
+from os import path
+from datetime import datetime
 from sqlalchemy import func
-from main import app
-from models import db, User, Post, Comment, Tag, posts_tags
-from forms import CommentForm
+from hoodsite.models import db, User, Post, Comment, Tag, posts_tags
+from hoodsite.forms import CommentForm
 
 
 blog_blueprint = Blueprint('blog', __name__, template_floder=path.join(path.pardir, 'templates', 'blog'), url_prefix='/blog')
