@@ -6,11 +6,14 @@ from uuid import uuid4
 from os import path
 from datetime import datetime
 from sqlalchemy import func
-from hoodsite.models import db, User, Post, Comment, Tag, posts_tags
-from hoodsite.forms import CommentForm
+from models import db, User, Post, Comment, Tag, posts_tags
+from forms import CommentForm
 
 
-blog_blueprint = Blueprint('blog', __name__, template_floder=path.join(path.pardir, 'templates', 'blog'), url_prefix='/blog')
+blog_blueprint = Blueprint('blog',
+                            __name__,
+                            template_folder=path.join(path.pardir, 'templates', 'blog'),
+                            url_prefix='/blog')
 
 def sidebar_data():
     recent = db.session.query(Post).order_by(Post.publish_date.desc()).limit(5).all()
@@ -62,7 +65,7 @@ def post(post_id):
                             top_tags=top_tags,
                             form=form)
 
-@app.route('/tag/<string:tag_name>')
+@blog_blueprint.route('/tag/<string:tag_name>')
 def tag(tag_name):
     '''view function for tag page'''
 
@@ -76,7 +79,7 @@ def tag(tag_name):
                             recent=recent,
                             top_tags=top_tags)
 
-@app.route('/user/<string:username>')
+@blog_blueprint.route('/user/<string:username>')
 def user(username):
     '''view function for user page'''
 

@@ -2,8 +2,8 @@
 #-*- coding:utf-8 -*-
 
 from flask import Flask, redirect, url_for
-from settings import DevConfig
 from models import db
+from settings import DevConfig
 from controllers import blog
 
 app = Flask(__name__)
