@@ -6,8 +6,8 @@ from uuid import uuid4
 from os import path
 from datetime import datetime
 from sqlalchemy import func
-from models import db, User, Post, Comment, Tag, posts_tags
-from forms import CommentForm
+from hoodsite.models import db, User, Post, Comment, Tag, posts_tags
+from hoodsite.forms import CommentForm
 
 
 blog_blueprint = Blueprint('blog',

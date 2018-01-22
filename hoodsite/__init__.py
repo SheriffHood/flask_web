@@ -2,21 +2,20 @@
 #-*- coding:utf-8 -*-
 
 from flask import Flask, redirect, url_for
-from models import db
-from settings import DevConfig
-from controllers import blog
+from hoodsite import models
+from hoodsite.controllers import blog
 
-app = Flask(__name__)
 
-app.config.from_object(DevConfig)
+def create_app(object_name):
 
-db.init_app(app)
+    app = Flask(__name__)
+    app.config.from_object(object_name)
+    models.db.init_app(app)
+    
+    @app.route('/')
+    def index():
+        return redirect( url_for('blog.home') )
 
-@app.route('/')
-def index():
-    return redirect( url_for('blog.home') )
+    app.register_blueprint(blog.blog_blueprint)
 
-app.register_blueprint(blog.blog_blueprint)
-
-if __name__ == '__main__':
-    app.run()
+    return app

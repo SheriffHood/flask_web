@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 #-*- coding:utf-8 -*-
 
+import os
+
 from flask_script import Manager, Server, Shell
 from flask_migrate import Migrate, MigrateCommand
-from hoodsite import app, db
+from hoodsite import create_app
 from hoodsite.models import db, User, Post, Comment, Tag
 
+env = os.environ.get('BLOG_ENV', 'dev')
+
+app = create_app('hoodsite.settings.%sConfig' % env.capitalize())
 
 manager = Manager(app)
 migrate = Migrate(app, db)
