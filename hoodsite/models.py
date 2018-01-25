@@ -32,6 +32,13 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r>' % self.username
 
+    def set_password(self, password):
+        return bcrypt.generate_password_hash(password)
+
+    def check_password(self, password):
+        return bcrypt.check_password_hash(self.password, password)
+
+
 class Post(db.Model):
     '''post class'''
 
