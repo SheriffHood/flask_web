@@ -7,6 +7,7 @@ Author: yuexing
 Keyword: define database 
 '''
 from flask_sqlalchemy import SQLAlchemy
+from hoodsite.extensions import bcrypt
 
 db = SQLAlchemy()
 
