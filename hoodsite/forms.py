@@ -14,8 +14,8 @@ class CommentForm(FlaskForm):
 class LoginForm(FlaskForm):
     """Login Form"""
 
-    username = StringField('Username', [ Datarequired(), Length(max=255) ])
-    password = PasswordField('Password',[Datarequired()])
+    username = StringField('Username', [ DataRequired(), Length(max=255) ])
+    password = PasswordField('Password',[DataRequired()])
 
     def validate(self):
 
@@ -39,9 +39,9 @@ class LoginForm(FlaskForm):
 class RegisterForm(FlaskForm):
     """Register Form"""
 
-    username = StringField('Username', [Datarequired(), Length(max=25)])
-    password = PasswordField('Password', [Datarequired(), Length(min=8)])
-    confirm = PasswordField('Confirm Password', [Datarequired(), EqualTo('password')])
+    username = StringField('Username', [DataRequired(), Length(max=25)])
+    password = PasswordField('Password', [DataRequired(), Length(min=8)])
+    confirm = PasswordField('Confirm Password', [DataRequired(), EqualTo('password')])
 
     def validate(self):
 
