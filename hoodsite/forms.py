@@ -56,3 +56,9 @@ class RegisterForm(FlaskForm):
             return False
 
         return True
+
+class PostForm(FlaskForm):
+    """Post Form"""
+    
+    title = StringField('Title', [DataRequired(), Length(max=255)])
+    text = TextAreaField('Blog Content', [DataRequired()])
