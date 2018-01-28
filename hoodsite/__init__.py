@@ -3,7 +3,7 @@
 
 from flask import Flask, redirect, url_for
 from hoodsite.models import db
-from hoodsite.controllers import blog
+from hoodsite.controllers import blog, main
 from hoodsite.extensions import bcrypt
 
 
@@ -19,5 +19,6 @@ def create_app(object_name):
         return redirect( url_for('blog.home') )
 
     app.register_blueprint(blog.blog_blueprint)
+    app.register_blueprint(main.main_blueprint)
 
     return app
