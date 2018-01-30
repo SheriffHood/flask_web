@@ -4,7 +4,7 @@
 from flask import Flask, redirect, url_for
 from hoodsite.models import db
 from hoodsite.controllers import blog, main
-from hoodsite.extensions import bcrypt
+from hoodsite.extensions import bcrypt, login_manager
 
 
 def create_app(object_name):
@@ -13,6 +13,7 @@ def create_app(object_name):
     app.config.from_object(object_name)
     db.init_app(app)
     bcrypt.init_app(app)
+    login_manager.init_app(app)
     
     @app.route('/')
     def index():

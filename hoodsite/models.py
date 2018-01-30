@@ -39,6 +39,23 @@ class User(db.Model):
     def check_password(self, password):
         return bcrypt.check_password_hash(self.password, password)
 
+    def is_authenticated(self):
+        if isinstance(self, AnonymouseUserMixin):
+            return False
+        else:
+            return True
+
+    def is_active():
+        return True
+
+    def is_anonymouse(self):
+        if isinstance(self,AnonymouseUserMixin):
+            return True
+        else:
+            return False    
+
+    def get_id(self):
+        return unicode(self.id)
 
 class Post(db.Model):
     '''post class'''
