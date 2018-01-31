@@ -2,6 +2,7 @@
 #-*- coding:utf-8 -*-
 
 from flask import render_template, Blueprint, redirect, url_for
+from flask_login import login_required, current_user
 from uuid import uuid4
 from os import path
 from datetime import datetime
@@ -94,13 +95,17 @@ def user(username):
                             top_tags=top_tags)
 
 @blog_blueprint.route('/new', methods=['GET', 'POST'])
+@login_required
 def new_post():
     
     form = PostForm()
+    if not current_user:
+        return redirent(url_for('main.login'))
     if form.validate_on_submit():
         new_post = Post(id=str(uuid4()), title=form.title.data)
         new_post.text = form.text.data
         new_post.publist_data = datetime.now()
+        new_post.users = current_user
 
         db.session.add(new_post)
         db.session.commit()
