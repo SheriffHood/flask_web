@@ -3,6 +3,7 @@
 
 from flask import render_template, Blueprint, redirect, url_for
 from flask_login import login_required, current_user
+from flask.ext.principal import Principal, Permission, RoleNeed, UserNeed
 from uuid import uuid4
 from os import path
 from datetime import datetime
@@ -118,17 +119,27 @@ def new_post():
 def edit_post(id):
     
     post = Post.query.get_or_404(id)
-    form = PostForm()
+    if not current_user:
+        return redirect(url_for('main.login'))
+    
+    if current_user != post.users:
+        return redirect(url_for('blog.post'), post_id=id)
 
-    if form.validate_on_submit():
-        post.title = form.title.data
-        post.text = form.text.data
-        post.publish_date = datetime.now()
+    permission = Permission(UserNeed(post.users.id))
+    if permission.can() or admin_permission.can():
+        form = PostForm()
 
-        db.session.add(post)
-        db.session.commit()
+        if form.validate_on_submit():
+            post.title = form.title.data
+            post.text = form.text.data
+            post.publish_date = datetime.now()
 
-        return redirect(url_for('blog.post', post_id=post.id))
+            db.session.add(post)
+            db.session.commit()
+
+            return redirect(url_for('blog.post', post_id=post.id))
+    else:
+        abort(403)
 
     form.title.data = post.title
     form.text.data = post.text

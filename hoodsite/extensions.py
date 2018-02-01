@@ -3,10 +3,12 @@
 
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
+from flask.ext.principal import Principal
 from hoodsite.modesl import User
 
 bcrypt = Bcrypt()
 login_manager = LoginManager()
+principals = Principal()
 
 login_manager.login_view = "main.login"
 login_manager.session_protection = "strong"

@@ -5,7 +5,8 @@ from os import path
 from uuid import uuid4
 
 from flask import flash, url_for, redirect, render_template, Blueprint
-from flask_login import login_user, logout.user
+from flask_login import login_user, logout_user
+from flask.ext.principal import Principal, Identity, identity_changed
 from hoodsite.forms import LoginForm, RegisterForm
 from hoodsite.models import User, db
 
