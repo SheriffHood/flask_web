@@ -3,7 +3,7 @@
 
 from flask import Flask, redirect, url_for
 from flask_login import current_user
-from flask.ext.principal import identity_loaded, RoleNeed, UserNeed
+from flask_principal import identity_loaded, RoleNeed, UserNeed
 from hoodsite.models import db
 from hoodsite.controllers import blog, main
 from hoodsite.extensions import bcrypt, login_manager, principals
@@ -22,7 +22,7 @@ def create_app(object_name):
     def index():
         return redirect( url_for('blog.home') )
 
-    @identity_loaded.connect_via(app):
+    @identity_loaded.connect_via(app)
     def on_identity_loaded(sender, identitu):
         identity.user = current_user
 

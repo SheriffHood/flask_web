@@ -3,7 +3,7 @@
 
 from flask import render_template, Blueprint, redirect, url_for
 from flask_login import login_required, current_user
-from flask.ext.principal import Principal, Permission, RoleNeed, UserNeed
+from flask_principal import Principal, Permission, RoleNeed, UserNeed
 from uuid import uuid4
 from os import path
 from datetime import datetime

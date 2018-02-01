@@ -15,6 +15,10 @@ posts_tags = db.Table('posts_tags',
     db.Column('post_id', db.String(45), db.ForeignKey('posts.id')),
     db.Column('tag_id', db.String(45), db.ForeignKey('tags.id')))
 
+users_roles = db.Table('users_roles',
+    db.Column('user_id', db.String(45), db.ForeignKey('users.id')),
+    db.Column('role_id', db.String(45), db.ForeignKey('roles.id')))
+
 class User(db.Model):
     '''user class'''
 
@@ -56,6 +60,22 @@ class User(db.Model):
 
     def get_id(self):
         return unicode(self.id)
+
+class Role(db.Model):
+    '''Protected roles'''
+
+    __tablename__ = 'roles'
+
+    id = db.Column(db.String(45), primary_key=True)
+    name = db.Column(db.String(255), unique=True)
+    description = db.Column(db.String(255))
+
+    def __init__(self, id, name):
+        self.id = id
+        self.name = name
+
+    def __repr__(self):
+        return "<Model Role `{}`>".format(self.name)
 
 class Post(db.Model):
     '''post class'''

@@ -3,8 +3,7 @@
 
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
-from flask.ext.principal import Principal
-from hoodsite.modesl import User
+from flask_principal import Principal
 
 bcrypt = Bcrypt()
 login_manager = LoginManager()
@@ -17,4 +16,6 @@ login_manager.login_message_category = "info"
 
 @login_manager.user_loader
 def load_user(user_id):
+    
+    from models import User
     return User.query.filter_by(id=user_id).first()
