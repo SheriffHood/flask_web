@@ -14,9 +14,8 @@ class CommentForm(FlaskForm):
 class LoginForm(FlaskForm):
     """Login Form"""
 
-    username = StringField('Username', [ DataRequired(), Length(max=255) ])
-    password = PasswordField('Password',[DataRequired()])
-    remember = BooleanField("Remember Me")
+    username = StringField('Username', validators=[DataRequired(), Length(max=255)])
+    password = PasswordField('Password', validators=[DataRequired()])
 
     def validate(self):
 
@@ -25,7 +24,7 @@ class LoginForm(FlaskForm):
         if not check_validata:
             return False
 
-        user = User.query.filter_by(username=self.data).first()
+        user = User.query.filter_by(username=self.username.data).first()
 
         if not user:
             self.username.errors.append('Invalid username or password')
