@@ -10,7 +10,7 @@ from datetime import datetime
 from sqlalchemy import func
 from hoodsite.models import db, User, Post, Comment, Tag, posts_tags
 from hoodsite.forms import CommentForm, PostForm
-
+from hoodsite.extensions import admin_permission, poster_permission, default_permission
 
 blog_blueprint = Blueprint('blog',
                             __name__,
@@ -116,6 +116,8 @@ def new_post():
     return render_template('new_post.html', form=form)
 
 @blog_blueprint.route('/edit/<string:id>', methods=['GET', 'POST'])
+@login_required
+@poster_permission.require(http_exception=403)
 def edit_post(id):
     
     post = Post.query.get_or_404(id)

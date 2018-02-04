@@ -28,6 +28,7 @@ class User(db.Model):
     username = db.Column(db.String(255))
     password = db.Column(db.String(255))
     posts = db.relationship('Post', backref='users', lazy='dynamic')
+    roles = db.relationship('Role', secondary=users_roles, backref=db.backref('users', lazy='dynamic'))
 
     def __init__(self, id, username, password):
         self.id = id
@@ -75,7 +76,7 @@ class Role(db.Model):
         self.name = name
 
     def __repr__(self):
-        return "<Model Role `{}`>".format(self.name)
+        return '<Model Role %r>' % self.name
 
 class Post(db.Model):
     '''post class'''

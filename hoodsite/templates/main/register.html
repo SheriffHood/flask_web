@@ -4,10 +4,6 @@
   Register                                                                 
 {% endblock %}                                                             
 
-{% block captcha %}                                                        
-  <script src='https://www.google.com/recaptcha/api.js'></script>          
-{% endblock %}
-
 {% block body %}                                                           
 <div class="col-lg-3">
   <!-- Set the form -->                                                    
@@ -27,7 +23,6 @@
       {{ form.comfirm(class_='form-control') }}                            
     </div>
     <input class="btn btn-primary" type="submit" value="Register">         
-    <div class="g-recaptcha" data-sitekey="<Your public key>"></div>
   </form>
 </div>
 {% endblock %}
