@@ -50,7 +50,7 @@ class RegisterForm(FlaskForm):
         if not check_validata:
             return False
 
-        user = User.query.filter_by(username=self.data).first()
+        user = User.query.filter_by(username=self.username.data).first()
         if user:
             self.username.errors.append('User with that name already exists')
             return False
