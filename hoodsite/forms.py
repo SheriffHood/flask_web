@@ -16,6 +16,7 @@ class LoginForm(FlaskForm):
 
     username = StringField('Username', validators=[DataRequired(), Length(max=255)])
     password = PasswordField('Password', validators=[DataRequired()])
+    remember = BooleanField("Remember Me")
 
     def validate(self):
 
