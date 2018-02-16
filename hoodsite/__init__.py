@@ -23,7 +23,7 @@ def create_app(object_name):
         return redirect( url_for('blog.home') )
 
     @identity_loaded.connect_via(app)
-    def on_identity_loaded(sender, identitu):
+    def on_identity_loaded(sender, identity):
         identity.user = current_user
 
         if hasattr(current_user, 'id'):

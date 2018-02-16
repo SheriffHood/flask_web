@@ -21,5 +21,5 @@ default_permission = Permission(RoleNeed('default'))
 @login_manager.user_loader
 def load_user(user_id):
     
-    from models import User
+    from hoodsite.models import User
     return User.query.filter_by(id=user_id).first()

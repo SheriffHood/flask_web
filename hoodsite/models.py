@@ -39,10 +39,10 @@ class User(db.Model):
         return '<User %r>' % self.username
 
     def set_password(self, password):
-        return bcrypt.generate_password_hash(password, 12)
+        return bcrypt.generate_password_hash(password, 10)
 
     def check_password(self, password):
-        return bcrypt.check_password_hash(bcrypt.generate_password_hash(password, 12), password)
+        return bcrypt.check_password_hash(bcrypt.generate_password_hash(password, 10), password)
 
     def is_authenticated(self):
         if isinstance(self, AnonymouseUserMixin):
