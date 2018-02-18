@@ -9,6 +9,8 @@ class Config(object):
     Base Config Class
     '''
     SECRET_KEY = 'cf7fb7e99f88ebcba48385827c810882'
+    CELERY_RESULT_BACKEND = 'amqp://guest:guest@localhost:5672//'
+    CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672//'
 
 class ProdConfig(Config):
     '''

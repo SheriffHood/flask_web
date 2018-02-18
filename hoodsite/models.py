@@ -129,3 +129,19 @@ class Tag(db.Model):
 
     def __repr__(self):
         return '<Model Tag %r>' % self.name
+
+class Reminder(db.Model):
+    '''Mail class'''
+
+    __tablename__ = 'reminders'
+    id = db.Column(db.String(45), primary_key=True)
+    date = db.Column(db.Datetime())
+    email = db.Column(db.String(255))
+    text = db.Column(db.Text())
+
+    def __init__(self, id, text):
+        self.id = id
+        self.text = text
+
+    def __repr__(self):
+        return '<Model Reminder %r>' % self.text[:20]

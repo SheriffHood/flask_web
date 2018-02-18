@@ -4,9 +4,11 @@
 from flask import Flask, redirect, url_for
 from flask_login import current_user
 from flask_principal import identity_loaded, RoleNeed, UserNeed
+from sqlalchemy import event
 from hoodsite.models import db
 from hoodsite.controllers import blog, main
-from hoodsite.extensions import bcrypt, login_manager, principals
+from hoodsite.extensions import bcrypt, login_manager, principals, flask_celery, mail
+from hoodsite.tasks import on_reminder_save
 
 
 def create_app(object_name):
@@ -17,6 +19,8 @@ def create_app(object_name):
     bcrypt.init_app(app)
     login_manager.init_app(app)
     principals.init_app(app)
+    flask_celery.init_app(app)
+    mail.init_app(app)
     
     @app.route('/')
     def index():
@@ -35,5 +39,7 @@ def create_app(object_name):
 
     app.register_blueprint(blog.blog_blueprint)
     app.register_blueprint(main.main_blueprint)
+
+    event.listen(Reminder, 'after_insert', on_reminder_save)
 
     return app
