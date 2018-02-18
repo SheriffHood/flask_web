@@ -65,7 +65,9 @@ def post(post_id):
                             comments=comments,
                             recent=recent,
                             top_tags=top_tags,
-                            form=form)
+                            form=form,
+                            poster_permission=poster_permission,
+                            admin_permission=admin_permission)
 
 @blog_blueprint.route('/tag/<string:tag_name>')
 def tag(tag_name):
@@ -105,7 +107,7 @@ def new_post():
     if form.validate_on_submit():
         new_post = Post(id=str(uuid4()), title=form.title.data)
         new_post.text = form.text.data
-        new_post.publist_data = datetime.now()
+        new_post.publish_data = datetime.now()
         new_post.users = current_user
 
         db.session.add(new_post)
@@ -117,17 +119,21 @@ def new_post():
 
 @blog_blueprint.route('/edit/<string:id>', methods=['GET', 'POST'])
 @login_required
-@poster_permission.require(http_exception=403)
+@admin_permission.require(http_exception=403)
 def edit_post(id):
-    
+
     post = Post.query.get_or_404(id)
+
+    # Ensure the user logged in.
     if not current_user:
         return redirect(url_for('main.login'))
-    
-    if current_user != post.users:
-        return redirect(url_for('blog.post'), post_id=id)
 
-    permission = Permission(UserNeed(post.users.id))
+    # Only the post onwer can be edit this post.
+    if current_user != post.user:
+        return redirect(url_for('blog.post', post_id=id))
+
+    # Admin can be edit the post.
+    permission = Permission(UserNeed(post.user.id))
     if permission.can() or admin_permission.can():
         form = PostForm()
 
@@ -136,6 +142,7 @@ def edit_post(id):
             post.text = form.text.data
             post.publish_date = datetime.now()
 
+            # Update the post
             db.session.add(post)
             db.session.commit()
 

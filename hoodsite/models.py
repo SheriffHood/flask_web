@@ -88,6 +88,7 @@ class Post(db.Model):
     text = db.Column(db.Text())
     publish_date = db.Column(db.DateTime)
     user_id = db.Column(db.String(45), db.ForeignKey('users.id'))
+    user = db.relationship('User', back_populates='posts')
     comments = db.relationship('Comment', backref='posts', lazy='dynamic')
     tags = db.relationship('Tag', secondary=posts_tags, backref=db.backref('posts', lazy='dynamic'))
 
