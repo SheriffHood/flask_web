@@ -135,7 +135,7 @@ class Reminder(db.Model):
 
     __tablename__ = 'reminders'
     id = db.Column(db.String(45), primary_key=True)
-    date = db.Column(db.Datetime())
+    date = db.Column(db.DateTime())
     email = db.Column(db.String(255))
     text = db.Column(db.Text())
 

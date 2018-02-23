@@ -9,6 +9,7 @@ from hoodsite.models import db
 from hoodsite.controllers import blog, main
 from hoodsite.extensions import bcrypt, login_manager, principals, flask_celery, mail
 from hoodsite.tasks import on_reminder_save
+from hoodsite.models import Reminder
 
 
 def create_app(object_name):

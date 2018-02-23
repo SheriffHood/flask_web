@@ -6,12 +6,14 @@ from flask_login import LoginManager
 from flask_principal import Principal, Permission, RoleNeed
 from flask_celery import Celery
 from flask_mail import Mail
+from flask_cache import Cache
 
 bcrypt = Bcrypt()
 login_manager = LoginManager()
 principals = Principal()
 flask_celery = Celery()
 mail = Mail()
+cache = Cache()
 
 login_manager.login_view = "main.login"
 login_manager.session_protection = "strong"
