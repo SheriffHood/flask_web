@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #-*- coding:utf-8 -*-
 
-from flask import render_template, Blueprint, redirect, url_for
+from flask import render_template, Blueprint, redirect, url_for, request
 from flask_login import login_required, current_user
 from flask_principal import Principal, Permission, RoleNeed, UserNeed
 from uuid import uuid4
@@ -10,13 +10,14 @@ from datetime import datetime
 from sqlalchemy import func
 from hoodsite.models import db, User, Post, Comment, Tag, posts_tags
 from hoodsite.forms import CommentForm, PostForm
-from hoodsite.extensions import admin_permission, poster_permission, default_permission
+from hoodsite.extensions import admin_permission, poster_permission, default_permission, cache
 
 blog_blueprint = Blueprint('blog',
                             __name__,
                             template_folder=path.join(path.pardir, 'templates', 'blog'),
                             url_prefix='/blog')
 
+@cache.cached(timeout=7200, key_prefix='sidebar_data')
 def sidebar_data():
     recent = db.session.query(Post).order_by(Post.publish_date.desc()).limit(5).all()
 
@@ -27,6 +28,7 @@ def sidebar_data():
 
 @blog_blueprint.route('/')
 @blog_blueprint.route('/<int:page>')
+@cache.cached(timeout=60)
 def home(page=1):
     '''view function for home page'''
 
@@ -41,7 +43,14 @@ def home(page=1):
                             recent=recent,
                             top_tags=top_tags)
 
+def make_cache_key(*arg, **kwarg):
+    path = request.path
+    args = str( hash(frozenset(request.args.items())) )
+
+    return (path + args).encode('utf-8')
+
 @blog_blueprint.route('/post/<string:post_id>', methods=('GET', 'POST'))
+@cache.cached(timeout=60, key_prefix=make_cache_key)
 def post(post_id):
     '''view function for post page'''
 

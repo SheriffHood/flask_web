@@ -6,6 +6,8 @@ Date: 2017-12-7
 Author: yuexing
 Keyword: define database 
 '''
+from itsdangerour import TimedJSONWebSignatureSerializer as Serializer
+from flask import current_app, session
 from flask_sqlalchemy import SQLAlchemy
 from hoodsite.extensions import bcrypt
 
@@ -27,6 +29,7 @@ class User(db.Model):
     id = db.Column(db.String(45), primary_key=True)
     username = db.Column(db.String(255))
     password = db.Column(db.String(255))
+    confirmed = db.Column(db.Boolean, default=False)
     posts = db.relationship('Post', backref='users', lazy='dynamic')
     roles = db.relationship('Role', secondary=users_roles, backref=db.backref('users', lazy='dynamic'))
 
@@ -37,6 +40,29 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.username
+
+    def generate_confirmation_token(self, expiration=3600):
+        s = Serializer(current_app.config['SECRET_KEY'])
+        return s.dumps({'confirm': self.id})
+   
+   @staticmethod
+   @cache.memozie(60)
+    def confirm_user(self, token):
+        s = Serializer(current_app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token)
+        except SignatureExpired:
+            return None
+        except BadSignature:
+            return None
+
+        if data.get('confirm') != self.id:
+            return False
+
+        self.confirmed = True
+        db.session.add(self)
+
+        return True
 
     def set_password(self, password):
         return bcrypt.generate_password_hash(password, 10)
