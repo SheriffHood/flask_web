@@ -7,7 +7,7 @@ from flask_principal import identity_loaded, RoleNeed, UserNeed
 from sqlalchemy import event
 from hoodsite.models import db
 from hoodsite.controllers import blog, main
-from hoodsite.extensions import bcrypt, login_manager, principals, flask_celery, mail
+from hoodsite.extensions import bcrypt, login_manager, principals, flask_celery, mail, assets
 from hoodsite.tasks import on_reminder_save
 from hoodsite.models import Reminder
 
@@ -22,6 +22,7 @@ def create_app(object_name):
     principals.init_app(app)
     flask_celery.init_app(app)
     mail.init_app(app)
+    assets.init_app(app)
     
     @app.route('/')
     def index():
