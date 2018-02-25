@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 #-*- coding:utf-8 -*-
 
-from flask import Flask, redirect, url_for
+from flask import Flask, redirect, url_for, session
 from flask_login import current_user
 from flask_principal import identity_loaded, RoleNeed, UserNeed
 from sqlalchemy import event
-from hoodsite.models import db
-from hoodsite.controllers import blog, main
-from hoodsite.extensions import bcrypt, login_manager, principals, flask_celery, mail, assets
+from hoodsite.models import db, User, Post, Tag, Role, Reminder
+from hoodsite.controllers import blog, main, admin
+from hoodsite.extensions import bcrypt, login_manager, principals, flask_celery, mail, assets, main_css, main_js, flask_admin
 from hoodsite.tasks import on_reminder_save
 from hoodsite.models import Reminder
 
@@ -23,7 +23,18 @@ def create_app(object_name):
     flask_celery.init_app(app)
     mail.init_app(app)
     assets.init_app(app)
+    flask_admin.init_app(app)
+
+    flask_admin.add_view(admin.CustomView(name='Custom'))
+
+    models = [Role, Tag, Reminder]
+    for model in models:
+
+        flask_admin.add_view( admin.CustomModelView(model, db.session, category='Models') )
     
+    assets.register('main_css', main_css)
+    assets.register('main_js', main_js)
+
     @app.route('/')
     def index():
         return redirect( url_for('blog.home') )

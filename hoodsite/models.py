@@ -6,10 +6,10 @@ Date: 2017-12-7
 Author: yuexing
 Keyword: define database 
 '''
-from itsdangerour import TimedJSONWebSignatureSerializer as Serializer
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app, session
 from flask_sqlalchemy import SQLAlchemy
-from hoodsite.extensions import bcrypt
+from hoodsite.extensions import bcrypt, cache
 
 db = SQLAlchemy()
 
@@ -44,9 +44,9 @@ class User(db.Model):
     def generate_confirmation_token(self, expiration=3600):
         s = Serializer(current_app.config['SECRET_KEY'])
         return s.dumps({'confirm': self.id})
-   
-   @staticmethod
-   @cache.memozie(60)
+        
+    @staticmethod
+    @cache.memoize(60)
     def confirm_user(self, token):
         s = Serializer(current_app.config['SECRET_KEY'])
         try:

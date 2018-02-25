@@ -28,3 +28,4 @@ class DevConfig(Config):
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     CACHE_TYPE = 'simple'
+    ASSETS_DEBUG = True

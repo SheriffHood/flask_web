@@ -8,6 +8,7 @@ from flask_celery import Celery
 from flask_mail import Mail
 from flask_cache import Cache
 from flask_assets import Environment, Bundle
+from flask_admin import Admin
 
 bcrypt = Bcrypt()
 login_manager = LoginManager()
@@ -16,6 +17,7 @@ flask_celery = Celery()
 mail = Mail()
 cache = Cache()
 assets = Environment()
+flask_admin = Admin()
 
 login_manager.login_view = "main.login"
 login_manager.session_protection = "strong"

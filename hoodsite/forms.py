@@ -40,7 +40,7 @@ class LoginForm(FlaskForm):
 class RegisterForm(FlaskForm):
     """Register Form"""
 
-    email = StringField('Email', validators=[DataRequired(), Lenght(1, 64)])
+    email = StringField('Email', validators=[DataRequired(), Length(1, 64)])
     username = StringField('Username', [DataRequired(), Length(max=25)])
     password = PasswordField('Password', [DataRequired(), Length(min=8)])
     confirm = PasswordField('Confirm Password', [DataRequired(), EqualTo('password')])
