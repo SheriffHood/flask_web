@@ -26,7 +26,8 @@ def create_app(object_name):
     cache.init_app(app)
     flask_admin.init_app(app)
 
-    flask_admin.add_view(admin.CustomView(name='Custom'))
+    flask_admin.add_view(admin.UserView(User, db.session))
+    flask_admin.add_view(admin.PostView(Post, db.session))
 
     models = [Role, Tag, Reminder]
     for model in models:
