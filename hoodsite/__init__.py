@@ -7,7 +7,7 @@ from flask_principal import identity_loaded, RoleNeed, UserNeed
 from sqlalchemy import event
 from hoodsite.models import db, User, Post, Tag, Role, Reminder
 from hoodsite.controllers import blog, main, admin
-from hoodsite.extensions import bcrypt, login_manager, principals, flask_celery, mail, assets, main_css, main_js, flask_admin
+from hoodsite.extensions import bcrypt, login_manager, principals, flask_celery, mail, assets, cache, main_css, main_js, flask_admin
 from hoodsite.tasks import on_reminder_save
 from hoodsite.models import Reminder
 
@@ -23,6 +23,7 @@ def create_app(object_name):
     flask_celery.init_app(app)
     mail.init_app(app)
     assets.init_app(app)
+    cache.init_app(app)
     flask_admin.init_app(app)
 
     flask_admin.add_view(admin.CustomView(name='Custom'))

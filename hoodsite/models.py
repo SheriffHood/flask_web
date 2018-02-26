@@ -29,7 +29,6 @@ class User(db.Model):
     id = db.Column(db.String(45), primary_key=True)
     username = db.Column(db.String(255))
     password = db.Column(db.String(255))
-    confirmed = db.Column(db.Boolean, default=False)
     posts = db.relationship('Post', backref='users', lazy='dynamic')
     roles = db.relationship('Role', secondary=users_roles, backref=db.backref('users', lazy='dynamic'))
 
@@ -55,14 +54,9 @@ class User(db.Model):
             return None
         except BadSignature:
             return None
-
-        if data.get('confirm') != self.id:
-            return False
-
-        self.confirmed = True
-        db.session.add(self)
-
-        return True
+        
+        user = User.query.filter_by(id=data['id']).first()
+        return user
 
     def set_password(self, password):
         return bcrypt.generate_password_hash(password, 10)
