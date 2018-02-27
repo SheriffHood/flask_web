@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 #-*- coding:utf-8 -*-
 
+import os
 from flask import Flask, redirect, url_for, session
 from flask_login import current_user
 from flask_principal import identity_loaded, RoleNeed, UserNeed
@@ -10,7 +11,6 @@ from hoodsite.controllers import blog, main, admin
 from hoodsite.extensions import bcrypt, login_manager, principals, flask_celery, mail, assets, cache, main_css, main_js, flask_admin
 from hoodsite.tasks import on_reminder_save
 from hoodsite.models import Reminder
-
 
 def create_app(object_name):
 
@@ -28,6 +28,10 @@ def create_app(object_name):
 
     flask_admin.add_view(admin.UserView(User, db.session))
     flask_admin.add_view(admin.PostView(Post, db.session))
+    flask_admin.add_view(admin.CustomView(name='Custom'))
+
+    path = os.path.join(os.path.dirname(__file__), 'static')
+    flask_admin.add_view(admin.CustomFileAdmin(path, '/static/', name='Static Files'))
 
     models = [Role, Tag, Reminder]
     for model in models:
