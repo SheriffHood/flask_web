@@ -36,3 +36,7 @@ class UserView(ModelView):
 
 class PostView(ModelView):
     page_size = 20
+    column_searchable_list = ('text', 'title')
+    column_filters = ('title',)
+
+    edit_template = 'admin/post_edit.html'
