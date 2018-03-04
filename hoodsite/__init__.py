@@ -5,6 +5,7 @@ import os
 from flask import Flask, redirect, url_for, session
 from flask_login import current_user
 from flask_principal import identity_loaded, RoleNeed, UserNeed
+from flask_wtf.csrf import CsrfProtect
 from sqlalchemy import event
 from hoodsite.models import db, User, Post, Tag, Role, Reminder
 from hoodsite.controllers import blog, main, admin
@@ -25,6 +26,7 @@ def create_app(object_name):
     assets.init_app(app)
     cache.init_app(app)
     flask_admin.init_app(app)
+    CsrfProtect(app)
 
     flask_admin.add_view(admin.UserView(User, db.session))
     flask_admin.add_view(admin.PostView(Post, db.session))
