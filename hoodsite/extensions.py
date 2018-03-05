@@ -9,6 +9,7 @@ from flask_mail import Mail
 from flask_cache import Cache
 from flask_assets import Environment, Bundle
 from flask_admin import Admin
+from flask_wtf.csrf import CSRFProtect
 
 bcrypt = Bcrypt()
 login_manager = LoginManager()
@@ -18,6 +19,7 @@ mail = Mail()
 cache = Cache()
 assets = Environment()
 flask_admin = Admin()
+csrf = CSRFProtect()
 
 login_manager.login_view = "main.login"
 login_manager.session_protection = "strong"
