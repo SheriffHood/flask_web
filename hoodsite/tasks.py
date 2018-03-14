@@ -32,4 +32,4 @@ def remind(self, primary_key):
         self.retry(exc=err)
 
 def on_reminder_save(mapper, connect, self):
-    remind.apply_async(args=(sekf.id), eta=self.data)
+    remind.apply_async(args=(self.id), eta=self.data)
