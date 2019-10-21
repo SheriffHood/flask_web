@@ -100,7 +100,7 @@ urllib3==1.13.1
 usb-creator==0.3.0
 vine==1.1.4
 webassets==0.12.1
-Werkzeug==0.12.2
+Werkzeug==0.15.3
 WTForms==2.1
 xdiagnose==3.8.4.1
 xkit==0.0.0
