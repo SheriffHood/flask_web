@@ -72,7 +72,7 @@ python-editor==1.0.3
 python-systemd==231
 pytz==2018.3
 pyxdg==0.25
-reportlab==3.3.0
+reportlab==3.5.55
 requests==2.9.1
 sessioninstaller==0.0.0
 six==1.10.0
